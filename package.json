@@ -2,8 +2,8 @@
   "name": "helo-sim3",
   "version": "0.1.0",
   "private": true,
-  "main": "server/",
-  "proxy": "http://localhost:4000",
+  "main": "server/index.js",
+  "proxy": "http://localhost:4321",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -19,7 +19,8 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "redux-promise-middleware": "^6.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

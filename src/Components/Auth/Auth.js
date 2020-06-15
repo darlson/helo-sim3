@@ -1,36 +1,61 @@
 import React, {Component} from 'react'
+import axios from 'axios'
+import {connect} from 'react-redux'
+import {loginUser} from '../../ducks/reducer'
 
 class Auth extends Component {
     constructor() {
         super()
         this.state = {
-            email: '',
+            username: '',
             password: ''
         }
     }
 
     handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        this.setState({ [e.target.name]: e.target.value })
     }
 
+    login = (e) => {
+        e.preventDefault()
+        const {username, password} = this.state
+        axios.post('/auth/login', {username, password})
+        .then( res => {
+            this.props.loginUser(res.data)
+            this.props.history.push('/dashboard')
+        })
+        .catch( err => {
+            console.log(err.response.data)
+            alert(err.response.data)
+        })
+        // console.log(`logged in!`)
+    }
     register = (e) => {
-
+        e.preventDefault()
+        const {username, password} = this.state
+        axios.post('/auth/register', {username, password})
+        .then( res => {
+            this.props.loginUser(res.data)
+            this.props.history.push('/dashboard')
+        })
+        .catch( err => {
+            console.log(err.response.data)
+            alert(err.response.data)
+        })  
     }
 
     render() {
         console.log(this.state)
-        const {email, password} = this.state
+        const {username, password} = this.state
         return (
             <div>
                 <form
-                    onSubmit={e => this.register(e)}>
+                    onSubmit={e => this.login(e)}>
                     <input 
                         type='text' 
-                        placeholder='email' 
-                        name='email' 
-                        value={email}
+                        placeholder='username' 
+                        name='username' 
+                        value={username}
                         onChange={e => this.handleChange(e)} />
                     <input 
                         type='password' 
@@ -38,14 +63,15 @@ class Auth extends Component {
                         name='password' 
                         value={password} 
                         onChange={e => this.handleChange(e)} />
-                    <input 
-                        type='submit'
-                        value='Register'
-                    />
+                    <button type='submit'>Login</button>
+                    <button onClick={e => this.register(e)}>Register</button>
                 </form>
             </div>
         )
     }
 }
 
-export default Auth
+const mapStateToProps = reduxState => reduxState
+// const mapDispatchToProps = {loginUser}
+
+export default connect(mapStateToProps, {loginUser})(Auth)

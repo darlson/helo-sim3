@@ -5,7 +5,7 @@ import routes from './routes'
 import {withRouter} from 'react-router-dom'
 
 function App(props) {
-  console.log(props)
+  // console.log(props)
   return (
     <div className="App">
       { props.location.pathname === '/' ? null : <Nav /> }

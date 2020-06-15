@@ -3,6 +3,7 @@ create table users (
     id serial primary key,
     username text,
     password varchar(20)
+    profile_pic varchar(200)
 );
 
 create table posts (
