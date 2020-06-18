@@ -5,7 +5,7 @@ const session = require('express-session')
 const app = express()
 const ctrl = require('./controller')
 
-const {port, connectionString, secret} = process.env
+const {serverPort, connectionString, secret} = process.env
 
 app.use(express.json())
 app.use(
@@ -19,6 +19,7 @@ app.use(
 
 app.post('/auth/login', ctrl.login)
 app.post('/auth/register', ctrl.register)
+app.put('/auth/update', ctrl.update)
 app.delete('/auth/logout', ctrl.logout)
 app.get('/auth/user', ctrl.getUser)
 
@@ -29,6 +30,6 @@ massive({
 }).then( db => {
     app.set('db', db)
     console.log('db connected')
-    app.listen(port, () => console.log(`Listening on port ${port}`))
+    app.listen(serverPort, () => console.log(`Listening on port ${serverPort}`))
 }).catch( err => console.log(err))
 

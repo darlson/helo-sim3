@@ -1,13 +1,18 @@
 import axios from 'axios'
 
 const initialState = {
-    user: {},
+    user: {
+        username: '',
+        profilePic: '',
+        userId: 0
+    },
     isLoggedIn: false
 }
 
 const LOGIN_USER = 'LOGIN_USER'
 const LOGOUT_USER = 'LOGOUT_USER'
 const GET_USER = 'GET_USER'
+// const UPDATE_PW = 'UPDATE_PW'
 
 export function loginUser(user) {
     return {
@@ -16,7 +21,7 @@ export function loginUser(user) {
     }
 }
 
-export function logoutUser() {
+export function logoutUser(user) {
     return {
         type: LOGOUT_USER,
         payload: initialState
@@ -31,6 +36,14 @@ export function getUser() {
     }
 }
 
+// export function updatePass() {
+//     const newPass = axios.put('/auth/update')
+//     return {
+//         type: UPDATE_PW,
+//         payload: newPass
+//     }
+// }
+
 export default function (state = initialState, action) {
     switch(action.type) {
         case LOGIN_USER:
@@ -43,6 +56,8 @@ export default function (state = initialState, action) {
             return {...state, user: action.payload.data, isLoggedIn: true}
         case GET_USER + '_REJECTED':
             return initialState
+        // case UPDATE_PW:
+        //     return {...state, ...action.payload}
         default:
             return initialState
     }
